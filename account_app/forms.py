@@ -34,3 +34,29 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('phone_number', 'email', 'full_name', 'password', 'last_login')
+        
+        
+        
+class UserResitrationForm(forms.Form):
+    email = forms.EmailField()
+    full_name = forms.CharField(label='full name')
+    phone_number = forms.CharField(max_length=11)
+    password = forms.CharField(widget=forms.PasswordInput)
+    
+    #اعتباری سنجی ایمیل و شماره موبایل  
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        user = User.objects.filter(email=email).exists()
+        if user:
+            raise ValidationError('this email already exits')
+        return email
+    
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data['phone_number']
+        user = User.objects.filter(phone_number = phone_number).exists()
+        if user:
+            raise ValidationError('this phone_number already exists')
+        return phone_number
+    
+class VeriFycodeForm(forms.Form):
+    code = forms.IntegerField()
