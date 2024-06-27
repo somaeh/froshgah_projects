@@ -5,12 +5,15 @@ import random
 from utils import send_otp_code
 from.models import OtpCode, User
 from django.contrib import messages
-from .forms import VeriFycodeForm
+from .forms import VeriFycodeForm, UserLoginForm
+from django.contrib.auth import authenticate, login, logout
 
 class UserRegisterview(View):
     
     form_class = UserResitrationForm
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('home_app:home')
     
         form = self.form_class
         return render(request, 'account_app/register.html', {'form':form})
@@ -61,3 +64,31 @@ class UserRegiesterVerifyCodeView(View):
                 messages.error(request, 'your code is wrong', extra_tags='danger')
                 return redirect('account_app:verify_code')
         return render(request, 'account_app/register.html', {'form':form})
+
+class UserLoginView(View):
+    
+    form_class = UserLoginForm
+    
+    def get(self, request):
+        form = self.form_class
+        return render(request, 'account_app/login.html', {'form':form})
+        
+    
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, username=cd['username'], password=cd['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'you logged successfully', extra_tags='success')
+                return redirect('home_app:home')
+            messages.error(request, 'username or password is wrong', extra_tags='warning')
+        return render(request, 'account_app/login.html', {'form':form})
+            
+            
+class UserLogoutView(View):
+    def get(self ,request):
+        logout(request)
+        messages.success(request, 'user logout successfully', extra_tags='success')
+        return redirect('home_app:home')

@@ -10,17 +10,18 @@
 
 
 {% block content %}
+    <p> hello </p>
 
-{% for product in product %}
-    <div class="card" style="width: 18rem;">
-        <img src="{{ product.image.url }}" class="card-img-top" >
-        <div class="card-body">
-        <a  href="{{ product.get_absolute_url }}" class="card-title">{{ product.name }}</a>
-       
+    {% for product in products %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{ product.image.url }}" class="card-img-top" >
+            <div class="card-body">
+            <a  href="{{ product.get_absolute_url }}" class="card-title">{{ product.name }}</a>
+        
+            </div>
         </div>
-    </div>
 
-{% endfor %}
+    {% endfor %}
 
         
     
