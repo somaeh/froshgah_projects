@@ -3,6 +3,8 @@ from django.views import View
 from.models import Product
 from .import tasks
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
+from utils import IdAdminUserMixin
 
 
 class HomeView(View):
@@ -17,7 +19,7 @@ class ProductDetailView(View):
         product = get_object_or_404(Product, slug=slug)
         return render(request, 'home_app/detail.html', {' product':product})
     
-class BucketHome(View):
+class BucketHome(View, IdAdminUserMixin):
     
     template_name = 'home_app/bucket.html'
     
@@ -27,20 +29,24 @@ class BucketHome(View):
         objects = tasks.all_bucket_objects_task()
         return render(request, self.template_name, {'objects':objects})
     
-class DeleteBucketObjectView(View):
+    
+class DeleteBucketObjectView(View, IdAdminUserMixin):
     def get(self, request, key):
         tasks.delete_object_task.delay(key)
         messages.success(request, 'delete object successfully', extra_tags='info')
         return redirect('home_app:bucket')
     
     
-class DownloadBucketObjectView(View):
+    
+class DownloadBucketObjectView(View, IdAdminUserMixin):
     
     def get(self, request, key):
         
         tasks.download_object_task.delay(key)
         messages.success(request, 'your download will be start soon', extra_tags='info')
         return redirect('home_app:bucket')
+    
+  
         
         
         

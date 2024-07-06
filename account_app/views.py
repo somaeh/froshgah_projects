@@ -7,6 +7,7 @@ from.models import OtpCode, User
 from django.contrib import messages
 from .forms import VeriFycodeForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class UserRegisterview(View):
     
@@ -68,26 +69,27 @@ class UserRegiesterVerifyCodeView(View):
 class UserLoginView(View):
     
     form_class = UserLoginForm
+    template_name = 'account_app/login.html'
     
     def get(self, request):
         form = self.form_class
-        return render(request, 'account_app/login.html', {'form':form})
+        return render(request, self.template_name, {'form':form})
         
     
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = authenticate(request, username=cd['username'], password=cd['password'])
+            user = authenticate(request, phone=cd['phone'], password=cd['password'])
             if user is not None:
                 login(request, user)
                 messages.success(request, 'you logged successfully', extra_tags='success')
                 return redirect('home_app:home')
-            messages.error(request, 'username or password is wrong', extra_tags='warning')
-        return render(request, 'account_app/login.html', {'form':form})
+            messages.error(request, 'phone or password is wrong', extra_tags='warning')
+        return render(request, self.template_name, {'form':form})
             
             
-class UserLogoutView(View):
+class UserLogoutView(View, LoginRequiredMixin):
     def get(self ,request):
         logout(request)
         messages.success(request, 'user logout successfully', extra_tags='success')
