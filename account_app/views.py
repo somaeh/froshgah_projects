@@ -9,6 +9,7 @@ from .forms import VeriFycodeForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class UserRegisterview(View):
     
     form_class = UserResitrationForm
