@@ -15,10 +15,10 @@
         {% for obj in objects %}
         <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{ obj.Key }}/td>
+            <td>{{ obj.Key }}</td>
             <td>{{ obj.Size|filesizeformat }}</td>
-            <td><a href="{% url 'home_app:download_obj_bucket' obj.Key %}">download</a></td>
-            <td><a href="{% url 'home_app:delete_obj_bucket' obj.Key %}">delete</a></td>
+            <td><a href="{% url 'home_app:download-obj-bucket' obj.Key %}">download</a></td>
+            <td><a href="{% url 'home_app:delete-obj-bucket' obj.Key %}">delete</a></td>
         </tr>
         {% endfor %}
         

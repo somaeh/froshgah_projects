@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'account_app',
     'storages',
     'order_app',
+    'django_celery_beat',
+    
     
 ]
 
@@ -127,8 +129,8 @@ STATICFILES_DIRS = [
 
 #media file
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/' #ادرسی که فایل های مدیامون در دسترس هستش 
+MEDIA_ROOT = BASE_DIR / 'media' #اطلاعاتی که کاربر ارسال می کنه کجا ذخیره بشه
 
 
 # Default primary key field type
@@ -143,13 +145,16 @@ AUTH_USER_MODEL = 'account_app.User'
 
 #abra arvan cloud storages
 #این ها همه داخل سایت django-storages
-DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"  #قراره مدیا فایل اینجا ذخیره بشه
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage" #قراره مدیا فایل اینجا ذخیره بشه
+
 AWS_ACCESS_KEY_ID = "715eb295-333a-4f0c-a61f-38ec4ab40a16"
+
 AWS_SECRET_ACCESS_KEY = "4c0492c6d5c4cacc6ea27b9cb5127b84f321f948ee2d6bcc515f56f0e1aa6dd4"
-AWS_S3_ENDPOINT_URL = "https://github.com/s3fs-fuse/s3fs-fuse.git"
-AWS_STORAGE_BUCKET_NAME = "shop-froshgah1403" #اسم صندوقچه 
+AWS_S3_ENDPOINT_URL = "https://s3.ir-thr-at1.arvanstorage.ir"
+
+AWS_STORAGE_BUCKET_NAME = "django-froshga" #اسم صندوقچه 
 AWS_SERVICE_NAME = "s3"
-AWS_S3_FILE_OVERWITE = False
+AWS_S3_FILE_OVERWITE = False #اسم های مشابه را جایگزین نکن یک اسم جدید را برایش اضافه بکن
 AWS_LOCAL_STOTAGE = f'{BASE_DIR}/aws/'
 
 

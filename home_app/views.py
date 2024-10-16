@@ -5,6 +5,7 @@ from .import tasks
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from utils import IsAdminUserMixin
+from order_app.forms import CartAddForm
 
 
 class HomeView(View):
@@ -23,7 +24,8 @@ class HomeView(View):
 class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
-        return render(request, 'home_app/detail.html', {' product':product})
+        form = CartAddForm()
+        return render(request, 'home_app/detail.html', {'product':product, 'form':form})
     
 class BucketHome(View, IsAdminUserMixin):
     
