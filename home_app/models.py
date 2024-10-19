@@ -2,8 +2,9 @@ from django.db import models
 from django.urls import reverse
 
 class Category(models.Model):
-    sub_category =models.ForeignKey('self', on_delete=models.CASCADE, related_name='scategory', null=True, blank=True)
-    is_sub =models.BooleanField(default=False)
+    sub_category = models.ForeignKey('self', on_delete=models.CASCADE ,related_name='scategory', null=True, blank=True)
+   
+    is_sub =models.BooleanField(default=False) #این کتگوری که داریم زیر مجموعه هستش یا یک دسته بندی کلی هستش
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     

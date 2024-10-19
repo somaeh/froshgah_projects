@@ -6,12 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from utils import IsAdminUserMixin
 from order_app.forms import CartAddForm
+from  order_app.forms import CartAddForm
 
 
 class HomeView(View):
     def get(self, request, category_slug=None):
         products = Product.objects.filter(available=True) #فقط اون هایی را که موجود هستند بیاور
-        categories = Category.objects.all()
+        categories = Category.objects.filter(is_sub=False)
         
         if category_slug:
             category = Category.objects.get(slug=category_slug)

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'storages',
     'order_app',
     'django_celery_beat',
+    'orders_app',
     
     
 ]
