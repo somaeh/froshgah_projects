@@ -55,3 +55,7 @@ class Cart:
         
         return sum(int(item['price']) * item['quantity'] for item in self.cart.value())  #چند تا ابجکت ایتره بل را می گیرد و با هم جمع می کند
         
+        
+    def clear(self):
+        del self.session[CART_SESSION_ID]
+        self.save()

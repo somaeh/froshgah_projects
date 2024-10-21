@@ -7,6 +7,10 @@ class CartAddForm(forms.Form):
     quantity = forms.IntegerField(min_value=1, max_value=9)  #تعداد
     
     
+class CouponeApplyForm(forms.Form):
+    code = forms.CharField()
+    
+    
     
 
 
