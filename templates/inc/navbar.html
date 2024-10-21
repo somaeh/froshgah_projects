@@ -12,6 +12,8 @@
       {% if request.user.is_admin %}
         <a class="nav-link active" href="{% url 'home_app:bucket' %}">Bucket</a>
       {% endif %}
+      <a class="nav-link active" href="{% url 'account_app:register' %}">CART {{ cart|length }}</a>  #اسم کلید است
+
 
     </div>
   </div>

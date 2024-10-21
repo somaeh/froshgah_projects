@@ -5,28 +5,29 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Name</th> <!-- اصلاح شد: "Namet" به "Name" -->
+        <th scope="col">Quantity</th>
+        <th scope="col">Unit price</th>  
+        <th scope="col">Total price</th>  
+        <th scope="col">Remove</th>  
       </tr>
     </thead>
     <tbody>
+
+    {% for item in cart %}
       <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ item.product }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.total_price }}</td>
+        <td><a href="{% url 'order_app:cart_remove' item.product.id %}">remove</a></td> <!-- اصلاح شد: استفاده از نقل قول صحیح -->
       </tr>
+    {% endfor %}
       <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
+        <td>Total</td>
+        <td colspan="4"></td>
+        <td>{{ cart.get_total_price }}</td> <!-- اطمینان از وجود این متد در مدل یا view -->
       </tr>
     </tbody>
   </table>
