@@ -3,7 +3,7 @@ from django.views import View
 from .cart import Cart  # ایمپورت کردن سشن کارت
 from home_app.models import Product
 from .forms import CartAddForm, CouponeApplyForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from.models import Order, OrderItem, Coupon 
 from .forms import CouponeApplyForm
 import datetime
@@ -13,7 +13,8 @@ class CartView(View):
         cart = Cart(request)  # ایجاد یک نمونه از کلاس Cart
         return render(request, 'order_app/cart.html')  # اضافه کردن سبد خرید به context
 
-class CartAddView(View):
+class CartAddView(PermissionRequiredMixin, View):
+    permission_required = ('orders.add_order')
     def post(self, request, product_id):
         cart = Cart(request)  # ایجاد نمونه‌ای از کلاس Cart برای مدیریت سبد خرید از طریق سشن
         product = get_object_or_404(Product, id=product_id)  # دریافت محصول موردنظر بر اساس ID
@@ -21,8 +22,8 @@ class CartAddView(View):
         if form.is_valid():
             quantity = form.cleaned_data['quantity']  # دریافت مقدار quantity از فرم
             cart.add(product=product, quantity=quantity)  # افزودن محصول به سبد خرید
-            return redirect('order_app:cart')  # هدایت به صفحه سبد خرید
-        return redirect('order_app:cart')  # در صورت نامعتبر بودن فرم نیز به سبد خرید هدایت می‌شود
+        return redirect('order_app:cart')  # هدایت به صفحه سبد خرید
+       
 
 class CartRemoveView(View):
     def get(self, request, product_id):

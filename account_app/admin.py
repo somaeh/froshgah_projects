@@ -23,7 +23,7 @@ class UserAdmin(BaseUserAdmin):
     
     fieldsets = (
         (None, {'fields':('email', 'phone_number', 'full_name', 'password')}),
-        ('permissions', {'fields':('is_active', 'is_admin', 'last_login')}),
+        ('permissions', {'fields':('is_active', 'is_admin', 'last_login','is_superuser', 'groups', 'user_permissions')}),
     )
     
     
@@ -38,10 +38,10 @@ class UserAdmin(BaseUserAdmin):
     
     ordering = ('full_name', )
     
-    filter_horizontal = ()
+    filter_horizontal = ('groups', 'user_permissions')
     
     
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
 
     
