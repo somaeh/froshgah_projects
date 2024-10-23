@@ -11,7 +11,7 @@ from django.contrib import messages
 class CartView(View):
     def get(self, request):
         cart = Cart(request)  # ایجاد یک نمونه از کلاس Cart
-        return render(request, 'order_app/cart.html')  # اضافه کردن سبد خرید به context
+        return render(request, 'order_app/cart.html', {'cart':cart})  # اضافه کردن سبد خرید به context
 
 class CartAddView(PermissionRequiredMixin, View):
     permission_required = ('orders.add_order')
@@ -20,8 +20,9 @@ class CartAddView(PermissionRequiredMixin, View):
         product = get_object_or_404(Product, id=product_id)  # دریافت محصول موردنظر بر اساس ID
         form = CartAddForm(request.POST)  # دریافت داده‌های POST از طریق فرم
         if form.is_valid():
-            quantity = form.cleaned_data['quantity']  # دریافت مقدار quantity از فرم
-            cart.add(product=product, quantity=quantity)  # افزودن محصول به سبد خرید
+            cd = form.cleaned_data
+            # quantity = form.cleaned_data['quantity']  # دریافت مقدار quantity از فرم
+            cart.add(product, form.cleaned_data['quantity'])  # افزودن محصول به سبد خرید
         return redirect('order_app:cart')  # هدایت به صفحه سبد خرید
        
 

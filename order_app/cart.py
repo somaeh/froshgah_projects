@@ -5,9 +5,7 @@ from home_app.models import Product
 CART_SESSION_ID = 'cart'
 
 class Cart:
-    
     def __init__(self, request):
-        
         self.session = request.session
         cart = self.session.get(CART_SESSION_ID)
         if not cart:
@@ -39,6 +37,9 @@ class Cart:
             self.cart[product_id]= {'quantity':0, 'price':str(product.price)} 
         self.cart[product_id]['quantity'] += quantity
         self.save()
+        
+        # def save(self):
+        #     self.session.modified = True
         
     def remove(self, product):   #ری مو کردن سشن 
         product_id = str(product.id) # اون محصولی که داره میاد آی دی اش را میگریم استرینگش می کنیم بعد 

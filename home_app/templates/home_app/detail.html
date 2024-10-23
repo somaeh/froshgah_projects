@@ -11,10 +11,10 @@
     <p>{{ product.price }}toman</p>
     <img src="{{ product.image.url }}" style="width: 300px; hight: 300;" alt=""></img>
     <p>{{ product.description }}</p><br/><br/>
-    <form  action="{% url 'order_app:cart_add'  product.id %}" method='post' >
+    <form  action="{% url 'order_app:cart_add' product.id %}" method="post" >
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="add to cart">
+        {{ form.as_p }}
+        <input class="btn btn-danger"type="submit" value="add to cart">
     </form>
 
             
