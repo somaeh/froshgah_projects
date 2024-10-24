@@ -20,7 +20,7 @@
             </button>
             <ul class="dropdown-menu">
                 {% for sub in category.scategory.all %}
-                <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ sub.name }}</a></li>
+                <li><a class="dropdown-item" href="{{ sub.get_absolute_url }}">{{ sub.name }}</a></li>
                 {% endfor %}
             
             </ul>
