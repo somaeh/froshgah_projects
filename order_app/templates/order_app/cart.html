@@ -15,22 +15,22 @@
     <tbody>
 
     {% for item in cart %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ item.product }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.total_price }}</td>
-        <td><a href="{% url 'order_app:cart_remove' item.product.id %}">remove</a></td> <!-- اصلاح شد: استفاده از نقل قول صحیح -->
-      </tr>
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ item.product }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.total_price }}</td>
+      {% comment %} <td><a href="{% url 'order_app:cart_remove' item.product.id %}">remove</a></td> <!-- اصلاح شد: استفاده از نقل قول صحیح --> {% endcomment %}
+    </tr>
     {% endfor %}
-      <tr>
-        <td>Total</td>
-        <td colspan="4"></td>
-        <td>{{ cart.get_total_price }}</td> <!-- اطمینان از وجود این متد در مدل یا view -->
-      </tr>
+    <tr>
+      <td>Total</td>
+      <td colspan="4"></td>
+      <td>{{ cart.get_total_price }}</td> <!-- اطمینان از وجود این متد در مدل یا view -->
+    </tr>
     </tbody>
   </table>
-  <a href="{% url 'order_app:order_create' %}"class="btn btn-primary" >checkout</a>
+  <a href="{% url 'order_app:orders_create' %}"class="btn btn-primary" >checkout</a>
 
 {% endblock %}

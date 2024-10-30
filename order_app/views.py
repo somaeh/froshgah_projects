@@ -20,8 +20,6 @@ class CartAddView(PermissionRequiredMixin, View):
         product = get_object_or_404(Product, id=product_id)  # دریافت محصول موردنظر بر اساس ID
         form = CartAddForm(request.POST)  # دریافت داده‌های POST از طریق فرم
         if form.is_valid():
-            cd = form.cleaned_data
-            # quantity = form.cleaned_data['quantity']  # دریافت مقدار quantity از فرم
             cart.add(product, form.cleaned_data['quantity'])  # افزودن محصول به سبد خرید
         return redirect('order_app:cart')  # هدایت به صفحه سبد خرید
        

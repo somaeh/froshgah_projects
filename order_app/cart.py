@@ -13,8 +13,8 @@ class Cart:
         self.cart = cart 
         
     def __iter__(self): 
-        product_id = self.cart.keys() 
-        products = Product.objects.filter(id__in=product_id) 
+        product_ids = self.cart.keys() 
+        products = Product.objects.filter(id__in=product_ids) 
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]['product'] = product.name
@@ -38,8 +38,8 @@ class Cart:
         self.cart[product_id]['quantity'] += quantity
         self.save()
         
-        # def save(self):
-        #     self.session.modified = True
+    def save(self):
+        self.session.modified = True
         
     def remove(self, product):   #ری مو کردن سشن 
         product_id = str(product.id) # اون محصولی که داره میاد آی دی اش را میگریم استرینگش می کنیم بعد 
@@ -54,7 +54,7 @@ class Cart:
     
     def get_total_price(self):  #قیمت کل را حساب می کند 
         
-        return sum(int(item['price']) * item['quantity'] for item in self.cart.value())  #چند تا ابجکت ایتره بل را می گیرد و با هم جمع می کند
+        return sum(int(item['price']) * item['quantity'] for item in self.cart.values())  #چند تا ابجکت ایتره بل را می گیرد و با هم جمع می کند
         
         
     def clear(self):
